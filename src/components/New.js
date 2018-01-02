@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { indigo } from 'material-ui/colors'
 
 const New = () => (
-    <Grid container justify='center' alignItems='center' style={styles.container}>
-        <Grid item>
+    <Grid container justify='center' alignItems='center' spacing={40} style={styles.container}>
+        <Grid item xs={12} md={4}>
             <Paper style={styles.paper}>
                 <Typography type='title'>Añadir nueva pregunta</Typography>
                 <br/>
@@ -42,13 +42,14 @@ const New = () => (
 
 const styles = {
     container: {
-        height: '100%'
+        height: '100%',
+        width: '100%',
+        margin: 0
     },
     paper: {
         padding: 40,
         display: 'flex',
-        flexDirection: 'column',
-        minWidth: 320
+        flexDirection: 'column'
     },
     actions: {
         marginTop: 20
