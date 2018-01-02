@@ -12,7 +12,6 @@ class Search extends React.Component {
         showResults: false,
         searchKeyword: '',
         buttonWidth: 0,
-        buttonHeight: 0,
         loadingResults: false
     }
 

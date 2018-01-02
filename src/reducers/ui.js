@@ -1,7 +1,8 @@
-import { SEARCH_LOADING } from '../actions/ui'
+import { SEARCH_LOADING, NEW_QUESTION_LOADING} from '../actions/ui'
 
 const initialState = {
-    searchIsLoading: false
+    searchIsLoading: false,
+    newQuestionIsLoading: false
 }
 
 const ui = (state = initialState, action) => {
@@ -13,7 +14,11 @@ const ui = (state = initialState, action) => {
                 ...state,
                 searchIsLoading: value
             }
-
+        case NEW_QUESTION_LOADING:
+            return {
+                ...state,
+                newQuestionIsLoading: value
+            }
         default:
             return state
     }
