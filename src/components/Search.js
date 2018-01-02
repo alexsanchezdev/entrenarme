@@ -1,5 +1,7 @@
 import React from 'react'
 import {Grid, Paper, Typography, Button, TextField} from 'material-ui'
+import { NavLink } from 'react-router-dom';
+import indigo from 'material-ui/colors/indigo';
 
 const Search = () => (
     <Grid container justify='center' alignItems='center' style={styles.container}>
@@ -18,7 +20,9 @@ const Search = () => (
                     alignItems='center'
                     style={styles.actions}>
                     <Grid item>
-                        <Typography>Añadir nueva pregunta</Typography>
+                        <NavLink to='/new' style={styles.link}>
+                            <Typography style={styles.linkText}>Añadir nueva pregunta</Typography>
+                        </NavLink>
                     </Grid>
                     <Grid item>
                         <Button raised color='primary'>BUSCAR</Button>
@@ -43,6 +47,12 @@ const styles = {
     },
     textfield: {
         width: '100%'
+    },
+    link: {
+        textDecoration: 'none' 
+    },
+    linkText: {
+       color: indigo[500]
     }
 }
 
