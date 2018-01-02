@@ -4,7 +4,6 @@ import {NavLink} from 'react-router-dom';
 import indigo from 'material-ui/colors/indigo';
 import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/questions'
-import background from '../img/sports_bg.png'
 import SearchResults from './SearchResults';
 
 class Search extends React.Component {
@@ -63,10 +62,9 @@ class Search extends React.Component {
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                            {this.state.loadingResults 
+                            {this.props.searchIsLoading 
                                 ? <div style={{ textAlign: 'center', width: this.state.buttonWidth}}><CircularProgress size={32} /></div> 
-                                : <Button raised color='primary' onClick={this.handleSearch}>BUSCAR</Button>}
-                                
+                                : <Button raised color='primary' onClick={this.handleSearch}>BUSCAR</Button>} 
                             </Grid>
                         </Grid>
                     </Paper>
@@ -107,4 +105,10 @@ const styles = {
         height: '100%',
     }
 }
-export default connect()(Search)
+
+const mapStateToProps = ({ ui }) => {
+    return {
+        searchIsLoading: ui.searchIsLoading
+    }
+}
+export default connect(mapStateToProps)(Search)

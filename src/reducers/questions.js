@@ -1,11 +1,10 @@
 import { GET_QUESTIONS } from '../actions/questions'
 
-const questions = (state, action) => {
+const questions = (state = {}, action) => {
     const { total, data} = action
 
     switch (action.type) {
         case GET_QUESTIONS:
-
             const questions = data.reduce((obj, item) => {
                 obj[item.id] = item
                 return obj
@@ -17,7 +16,7 @@ const questions = (state, action) => {
             }
 
         default:
-            return {}
+            return state
     }
 }
 
