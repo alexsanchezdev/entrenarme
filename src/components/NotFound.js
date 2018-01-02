@@ -11,7 +11,7 @@ const NotFound = () => (
                 <Typography>La página que estás buscando no existe o está entrenando en otro lugar.</Typography>
                 <br/>
                 <NavLink to='/' style={styles.link}>
-                    <Button raised style={styles.button}>VOLVER</Button>
+                    <Button raised color='primary'>VOLVER</Button>
                 </NavLink>
             </Paper>
         </Grid>
@@ -25,10 +25,6 @@ const styles = {
     paper: {
         padding: 40, 
         textAlign: 'center'
-    },
-    button: {
-        background: '#285364', 
-        color: '#fff'
     },
     link: {
         textDecoration: 'none'
