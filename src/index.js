@@ -6,6 +6,10 @@ import registerServiceWorker from './registerServiceWorker'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui'
 import { indigo, amber, red } from 'material-ui/colors'
+import reducer from './reducers'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 const theme = createMuiTheme({
     palette: {
@@ -23,10 +27,17 @@ const theme = createMuiTheme({
     },
   });
 
+  const store = createStore(reducer, compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+))
+
 ReactDOM.render(
+    <Provider store={store}>
     <Router>
         <MuiThemeProvider theme={theme}>
             <App />
         </MuiThemeProvider>
-    </Router>, document.getElementById('root'))
+    </Router>
+    </Provider>, document.getElementById('root'))
 registerServiceWorker()

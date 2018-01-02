@@ -1,12 +1,33 @@
 import React from 'react'
-import {Grid, Paper, Typography, Button, TextField} from 'material-ui'
+import {Grid, Paper, Typography, Button, TextField, CircularProgress} from 'material-ui'
 import {NavLink} from 'react-router-dom';
 import indigo from 'material-ui/colors/indigo';
+import { connect } from 'react-redux'
+import { fetchQuestions } from '../actions/questions'
 
 class Search extends React.Component {
 
     state = {
-        showResults: false
+        showResults: false,
+        searchKeyword: '',
+        buttonWidth: 0,
+        buttonHeight: 0,
+        loadingResults: false
+    }
+
+    handleSearch = (e) => {
+        const { dispatch } = this.props
+        const { searchKeyword } = this.state
+
+        this.setState({ buttonWidth: e.currentTarget.offsetWidth, loadingResults: true, showResults: true }, () => {
+            dispatch(fetchQuestions(0, searchKeyword))
+        })
+        
+    }
+
+    handleInputChange = (e) => {
+        const { name, value } = e.target
+        this.setState({ [name]: value })
     }
 
     render() {
@@ -25,6 +46,9 @@ class Search extends React.Component {
                             placeholder='Escribe una palabra o una frase'
                             margin='normal'
                             color='primary'
+                            name='searchKeyword'
+                            value={this.state.searchKeyword}
+                            onChange={this.handleInputChange}
                             style={styles.textfield}/>
                         <Grid
                             container
@@ -37,7 +61,10 @@ class Search extends React.Component {
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                                <Button raised color='primary' onClick={() => this.setState({showResults: !this.state.showResults})}>BUSCAR</Button>
+                            {this.state.loadingResults 
+                                ? <div style={{ textAlign: 'center', width: this.state.buttonWidth}}><CircularProgress size={32} /></div> 
+                                : <Button raised color='primary' onClick={this.handleSearch}>BUSCAR</Button>}
+                                
                             </Grid>
                         </Grid>
                     </Paper>
@@ -80,4 +107,4 @@ const styles = {
     }
 }
 
-export default Search
+export default connect()(Search)
