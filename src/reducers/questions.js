@@ -13,9 +13,7 @@ const questions = (state, action) => {
 
             return {
                 total,
-                data: {
-                    ...questions
-                }
+                ...questions
             }
 
         default:

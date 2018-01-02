@@ -4,6 +4,8 @@ import {NavLink} from 'react-router-dom';
 import indigo from 'material-ui/colors/indigo';
 import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/questions'
+import background from '../img/sports_bg.png'
+import SearchResults from './SearchResults';
 
 class Search extends React.Component {
 
@@ -70,9 +72,7 @@ class Search extends React.Component {
                     </Paper>
                 </Grid>
                 {this.state.showResults
-                    ? <Grid item xs={12} md style={styles.resultsContainer}>
-                            <Typography>Results</Typography>
-                        </Grid>
+                    ? <SearchResults />    
                     : null}
             </Grid>
         )
@@ -82,7 +82,7 @@ const styles = {
     container: {
         height: '100%',
         width: '100%',
-        margin: 0
+        margin: 0, 
     },
     paper: {
         padding: 40,
@@ -96,15 +96,15 @@ const styles = {
         width: '100%'
     },
     link: {
-        textDecoration: 'none'
+    
+    textDecoration: 'none'
     },
     linkText: {
         color: indigo[500]
     },
     resultsContainer: {
-        background: '#fff',
-        height: '100%'
+        
+        height: '100%',
     }
 }
-
 export default connect()(Search)
