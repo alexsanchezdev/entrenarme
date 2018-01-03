@@ -9,6 +9,7 @@ class SearchForm extends React.Component {
 
     renderSearchTextField = ({input}) => {
         return (<TextField
+            autoComplete='off'
             placeholder='Escribe una palabra o una frase'
             margin='normal'
             color='primary'
@@ -62,7 +63,12 @@ const styles = {
 }
 
 const mapStateToProps = ({ui, questions}) => {
-    return {searchIsLoading: ui.searchIsLoading, keyword: questions.keyword}
+    return {
+        searchIsLoading: ui.searchIsLoading, 
+        initialValues: {
+            keyword: questions.keyword
+        }
+    }
 }
 
 export default connect(mapStateToProps)(reduxForm({form: 'search'})(SearchForm))

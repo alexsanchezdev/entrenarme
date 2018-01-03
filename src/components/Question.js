@@ -17,7 +17,6 @@ class Question extends React.Component {
         const { id } = this.props.match.params
         Entrenarme.getQuestion(id).then((res) => {
             res.json().then((result) => {
-                console.log(result)
                 this.setState({text: result.text, answers: result.answers})
             })
         })
