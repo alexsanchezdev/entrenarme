@@ -1,28 +1,28 @@
 import React from 'react'
-import {Grid, Paper, Typography, Button, TextField, CircularProgress} from 'material-ui'
-import {NavLink} from 'react-router-dom';
+import {Grid, Paper} from 'material-ui'
 import indigo from 'material-ui/colors/indigo';
 import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/questions'
 import { updateMorePage } from '../actions/ui'
 import SearchResults from './SearchResults';
+import SearchForm from './SearchForm';
 
 class Search extends React.Component {
 
     state = {
-        searchKeyword: this.props.keyword,
-        buttonWidth: 0,
+        buttonRef: null
     }
 
-    handleSearch = (e) => {
-        const { dispatch } = this.props
-        const { searchKeyword } = this.state
+    setButtonRef = (button) => {
+        this.setState({ buttonRef: button}, () => console.log(this.state))
+    }
 
-        this.setState({ buttonWidth: e.currentTarget.offsetWidth}, () => {
-            dispatch(fetchQuestions(0, searchKeyword))
-            dispatch(updateMorePage(1))
-        })
-        
+    handleSearch = (values) => {
+
+        const { dispatch } = this.props
+
+        dispatch(fetchQuestions(0, values.keyword))
+        dispatch(updateMorePage(1))        
     }
 
     handleInputChange = (e) => {
@@ -43,32 +43,7 @@ class Search extends React.Component {
                 style={styles.container}>
                 <Grid item xs={12} md={5}>
                     <Paper style={styles.paper}>
-                        <Typography type='title'>Buscador de preguntas al experto</Typography>
-                        <br/>
-                        <TextField
-                            placeholder='Escribe una palabra o una frase'
-                            margin='normal'
-                            color='primary'
-                            name='searchKeyword'
-                            value={this.state.searchKeyword}
-                            onChange={this.handleInputChange}
-                            style={styles.textfield}/>
-                        <Grid
-                            container
-                            justify='space-between'
-                            alignItems='center'
-                            style={styles.actions}>
-                            <Grid item>
-                                <NavLink to='/new' style={styles.link}>
-                                    <Typography style={styles.linkText}>Añadir nueva pregunta</Typography>
-                                </NavLink>
-                            </Grid>
-                            <Grid item>
-                            {this.props.searchIsLoading 
-                                ? <div style={{ textAlign: 'center', width: this.state.buttonWidth}}><CircularProgress size={32} /></div> 
-                                : <Button raised color='primary' onClick={this.handleSearch}>BUSCAR</Button>} 
-                            </Grid>
-                        </Grid>
+                        <SearchForm onSubmit={this.handleSearch} setButtonRef={this.setButtonRef} buttonWidth={this.state.buttonWidth}/>
                     </Paper>
                 </Grid>
                 { questions.length > 0

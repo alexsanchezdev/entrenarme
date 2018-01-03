@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import NotFound from './components/NotFound'
 import Search from './components/Search'
-import New from './components/New'
+import NewQuestion from './components/NewQuestion'
 import styled from 'styled-components'
 import Question from './components/Question';
 
@@ -12,7 +12,7 @@ const App = () => (
     <Switch>
       <Route exact path='/' render={() => <Redirect to='/search'/>}/>
       <Route path='/search' component={Search}/>
-      <Route path='/new' component={New}/>
+      <Route path='/new' component={NewQuestion}/>
       <Route path='/question/:id' component={Question}/>
       <Route path='/404' component={NotFound}/>
       <Redirect to='/404'/>
