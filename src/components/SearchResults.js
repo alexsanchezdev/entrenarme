@@ -1,35 +1,45 @@
 import React from 'react'
 import {Grid, Typography} from 'material-ui'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import Paper from 'material-ui/Paper/Paper';
 import Button from 'material-ui/Button/Button';
 import background from '../img/sports_bg.png'
 
 class SearchResults extends React.Component {
+
+    handleQuestionClick = (id) => {
+        const { history } = this.props
+        history.push(`/question/${id}`)
+    }
+
     render() {
-        const {questions, total} = this.props
+        const {questions, total, searchIsLoading} = this.props
         return (
             <Grid item xs={12} md style={styles.resultsContainer}>
             <div
                 style={{
                 background: '#115566',
-                padding: 20,
+                paddingLeft: 20,
+                paddingRight: 20,
                 color: '#fff', 
                 position: 'fixed', 
                 top: 0, 
                 right: 0
             }}>
-                Mostrando {Object.keys(questions).length} de {total} resultados
+                {searchIsLoading ? <p>Cargando...</p> : <p>Mostrando {Object.keys(questions).length} de {total} resultados</p>}
             </div>
             <div style={{
                 backgroundImage: `url(${background})`,
                 padding: 20,
                 paddingTop: 72,
-                minHeight: 'calc(100% - 92px)',
+                height: 'calc(100% - 92px)',
+                overflowY: 'scroll'
             }}>
                 {questions.map(value => (
                     <div key={value.id}>
                         <Paper
+                            onClick={() => this.handleQuestionClick(value.id)}
                             style={{
                             padding: 20,
                             marginBottom: 16
@@ -63,7 +73,7 @@ const styles = {
     }
 }
 
-const mapStateToProps = ({questions}) => {
+const mapStateToProps = ({questions, ui}) => {
 
     return {
         total: Object
@@ -73,8 +83,10 @@ const mapStateToProps = ({questions}) => {
         questions: Object
             .keys(questions)
             .filter((value) => value !== 'total')
-            .map((key) => questions[key])
+            .map((key) => questions[key]),
+        searchIsLoading: ui.searchIsLoading
+        
     }
 }
 
-export default connect(mapStateToProps)(SearchResults)
+export default withRouter(connect(mapStateToProps)(SearchResults))
