@@ -9,7 +9,7 @@ import indigo from 'material-ui/colors/indigo';
 class Question extends React.Component {
 
     state = {
-        text: '',
+        text: 'Cargando pregunta...',
         answers: undefined
     }
 

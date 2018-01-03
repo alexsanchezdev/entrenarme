@@ -3,7 +3,7 @@ import {Field, reduxForm} from 'redux-form'
 import {Typography, Grid, TextField, CircularProgress, Button} from 'material-ui'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import indigo from 'material-ui/colors/indigo';
+import indigo from 'material-ui/colors/indigo'
 
 const renderNameTextField = ({input}) => {
     return (<TextField
@@ -43,11 +43,7 @@ const NewQuestionForm = (props) => {
                 </Grid>
                 <Grid item>
                     {newQuestionIsLoading
-                        ? <div
-                                style={{
-                                textAlign: 'center',
-                                width: 88
-                            }}><CircularProgress size={32}/></div>
+                        ? <CircularProgress size={32}/>
                         : <Button raised color='primary' type='submit'>ENVIAR</Button>}
                 </Grid>
             </Grid>
@@ -56,16 +52,6 @@ const NewQuestionForm = (props) => {
 }
 
 const styles = {
-    container: {
-        height: '100%',
-        width: '100%',
-        margin: 0
-    },
-    paper: {
-        padding: 40,
-        display: 'flex',
-        flexDirection: 'column'
-    },
     actions: {
         marginTop: 20
     },

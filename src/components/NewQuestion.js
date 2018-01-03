@@ -1,10 +1,9 @@
 import React from 'react'
 import {Grid, Paper, Snackbar} from 'material-ui'
 import { connect } from 'react-redux'
-import { indigo } from 'material-ui/colors'
 import { newQuestionIsLoading } from '../actions/ui'
 import * as Entrenarme from '../helpers/EntrenarmeAPI'
-import NewQuestionForm from './NewQuestionForm';
+import NewQuestionForm from './NewQuestionForm'
 
 class NewQuestion extends React.Component {
 
@@ -32,20 +31,16 @@ class NewQuestion extends React.Component {
         this.setState({showMessage: false})
     }
 
-    handleInputChange = (e) => {
-        const { name, value } = e.target
-        this.setState({ [name]: value })
-    }
-
     render() {
+        const { showMessage, message} = this.state
         return (
             <Grid container justify='center' alignItems='center' spacing={40} style={styles.container}>
                 <Snackbar
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}}
-                    open={this.state.showMessage}
+                    open={showMessage}
                     autoHideDuration={3000}
                     onClose={this.handleClose}
-                    message={<span id="message-id">{this.state.message}</span>}
+                    message={<span id="message-id">{message}</span>}
                 />
                 <Grid item xs={12} md={4}>
                     <Paper style={styles.paper}>
@@ -69,18 +64,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column'
     },
-    actions: {
-        marginTop: 20
-    },
-    textfield: {
-        width: '100%'
-    },
-    link: {
-        textDecoration: 'none'
-    },
-    linkText: {
-        color: indigo[500]
-    }
 }
 
 const mapStateToProps = ({ ui }) => {

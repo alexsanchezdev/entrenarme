@@ -3,8 +3,8 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import NotFound from './components/NotFound'
 import Search from './components/Search'
 import NewQuestion from './components/NewQuestion'
+import Question from './components/Question'
 import styled from 'styled-components'
-import Question from './components/Question';
 
 
 const App = () => (

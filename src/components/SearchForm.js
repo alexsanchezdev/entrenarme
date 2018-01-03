@@ -3,26 +3,28 @@ import {Field, reduxForm} from 'redux-form'
 import {Typography, Grid, TextField, CircularProgress, Button} from 'material-ui'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import indigo from 'material-ui/colors/indigo';
+import indigo from 'material-ui/colors/indigo'
 
-const renderSearchTextField = ({ input }) => {
-    return (<TextField
-        placeholder='Escribe una palabra o una frase'
-        margin='normal'
-        color='primary'
-        {...input}
-        style={styles.textfield}/>)
-}
+class SearchForm extends React.Component {
 
-const SearchForm = (props) => {
+    renderSearchTextField = ({input}) => {
+        return (<TextField
+            placeholder='Escribe una palabra o una frase'
+            margin='normal'
+            color='primary'
+            {...input}
+            style={styles.textfield}/>)
+    }
 
-        const {handleSubmit, searchIsLoading} = props
+    render() {
+        const {handleSubmit, searchIsLoading} = this.props
+        
         return (
             <form onSubmit={handleSubmit}>
                 <Typography type='title'>Buscador de preguntas al experto</Typography>
                 <br/>
-                <Field name='keyword' component={renderSearchTextField}/>
-
+                <Field name='keyword' component={this.renderSearchTextField}/>
+    
                 <Grid
                     container
                     justify='space-between'
@@ -35,29 +37,16 @@ const SearchForm = (props) => {
                     </Grid>
                     <Grid item>
                         {searchIsLoading
-                            ? <div
-                                    style={{
-                                    textAlign: 'center',
-                                    width: 88
-                                }}><CircularProgress size={32}/></div>
+                            ? <CircularProgress size={32}/>
                             : <Button raised color='primary' type='submit'>BUSCAR</Button>}
                     </Grid>
                 </Grid>
             </form>
         )
+    }
 }
 
 const styles = {
-    container: {
-        height: '100%',
-        width: '100%',
-        margin: 0
-    },
-    paper: {
-        padding: 40,
-        display: 'flex',
-        flexDirection: 'column'
-    },
     actions: {
         marginTop: 20
     },
@@ -65,7 +54,6 @@ const styles = {
         width: '100%'
     },
     link: {
-
         textDecoration: 'none'
     },
     linkText: {
@@ -74,9 +62,7 @@ const styles = {
 }
 
 const mapStateToProps = ({ui, questions}) => {
-    return {searchIsLoading: ui.searchIsLoading}
+    return {searchIsLoading: ui.searchIsLoading, keyword: questions.keyword}
 }
 
-export default connect(mapStateToProps)(reduxForm({
-    form: 'search'
-})(SearchForm))
+export default connect(mapStateToProps)(reduxForm({form: 'search'})(SearchForm))

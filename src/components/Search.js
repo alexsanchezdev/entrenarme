@@ -1,6 +1,5 @@
 import React from 'react'
-import {Grid, Paper} from 'material-ui'
-import indigo from 'material-ui/colors/indigo';
+import {Grid, Paper, Snackbar} from 'material-ui'
 import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/questions'
 import { updateMorePage } from '../actions/ui'
@@ -9,30 +8,15 @@ import SearchForm from './SearchForm';
 
 class Search extends React.Component {
 
-    state = {
-        buttonRef: null
-    }
-
-    setButtonRef = (button) => {
-        this.setState({ buttonRef: button}, () => console.log(this.state))
-    }
-
-    handleSearch = (values) => {
-
+    handleSearch = ({keyword}) => {
         const { dispatch } = this.props
 
-        dispatch(fetchQuestions(0, values.keyword))
+        dispatch(fetchQuestions(0, keyword))
         dispatch(updateMorePage(1))        
     }
 
-    handleInputChange = (e) => {
-        const { name, value } = e.target
-        this.setState({ [name]: value })
-    }
-
     render() {
-
-        const { questions } = this.props
+        const { questions, keyword } = this.props
 
         return (
             <Grid
@@ -43,12 +27,16 @@ class Search extends React.Component {
                 style={styles.container}>
                 <Grid item xs={12} md={5}>
                     <Paper style={styles.paper}>
-                        <SearchForm onSubmit={this.handleSearch} setButtonRef={this.setButtonRef} buttonWidth={this.state.buttonWidth}/>
+                        <SearchForm onSubmit={this.handleSearch}/>
                     </Paper>
                 </Grid>
                 { questions.length > 0
                     ? <SearchResults />    
-                    : null}
+                    : <div>{ keyword && <Snackbar
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}}
+                        open={true}
+                        message={<span id="message-id">{`No se encontraron resultados para "${keyword}"`}</span>}/>}
+                    </div>}
             </Grid>
         )
     }
@@ -63,36 +51,18 @@ const styles = {
         padding: 40,
         display: 'flex',
         flexDirection: 'column'
-    },
-    actions: {
-        marginTop: 20
-    },
-    textfield: {
-        width: '100%'
-    },
-    link: {
-    
-    textDecoration: 'none'
-    },
-    linkText: {
-        color: indigo[500]
-    },
-    resultsContainer: {
-        
-        height: '100%',
     }
 }
 
 const mapStateToProps = ({ questions, ui }) => {
     return {
         searchIsLoading: ui.searchIsLoading,
+        keyword: questions.keyword,
         questions: Object
             .keys(questions)
             .filter((value) => value !== 'total')
             .filter((value) => value !== 'keyword')
             .map((key) => questions[key]).reverse(),
-        keyword: questions.keyword,
-        total: questions.total
     }
 }
 export default connect(mapStateToProps)(Search)
