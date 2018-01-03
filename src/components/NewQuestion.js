@@ -1,7 +1,6 @@
 import React from 'react'
-import {Grid, Paper, Typography, Button, TextField, Snackbar, CircularProgress} from 'material-ui'
+import {Grid, Paper, Snackbar} from 'material-ui'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 import { indigo } from 'material-ui/colors'
 import { newQuestionIsLoading } from '../actions/ui'
 import * as Entrenarme from '../helpers/EntrenarmeAPI'
@@ -17,7 +16,7 @@ class NewQuestion extends React.Component {
     handleNewQuestion = (values) => {
         const { dispatch } = this.props
         const { name, question } = values
-        
+
         dispatch(newQuestionIsLoading(true))
         Entrenarme.postQuestion(name, question).then(() => {
             dispatch(newQuestionIsLoading(false))
