@@ -41,7 +41,7 @@ class Question extends React.Component {
                             {answers 
                                 ? <div>{answers.map((answer, index) => (
                                     <div key={answer.id} style={{margin: 20}}>
-                                        { ReactHtmlParser(answer.text) }
+                                        <p>{ ReactHtmlParser(answer.text) }</p>
                                         { index + 1 < answers.length ? <Divider/> : null}
                                     </div>
                                 ))}</div>
@@ -60,7 +60,8 @@ class Question extends React.Component {
 
 const styles = {
     container: {
-        height: '100%'
+        height: '100%',
+        width: '100%',
     },
     paper: {
         padding: 40, 
