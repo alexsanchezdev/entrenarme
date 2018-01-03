@@ -4,23 +4,23 @@ import {NavLink} from 'react-router-dom';
 import indigo from 'material-ui/colors/indigo';
 import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/questions'
+import { updateMorePage } from '../actions/ui'
 import SearchResults from './SearchResults';
 
 class Search extends React.Component {
 
     state = {
-        showResults: false,
-        searchKeyword: '',
+        searchKeyword: this.props.keyword,
         buttonWidth: 0,
-        loadingResults: false
     }
 
     handleSearch = (e) => {
         const { dispatch } = this.props
         const { searchKeyword } = this.state
 
-        this.setState({ buttonWidth: e.currentTarget.offsetWidth, loadingResults: true, showResults: true }, () => {
+        this.setState({ buttonWidth: e.currentTarget.offsetWidth}, () => {
             dispatch(fetchQuestions(0, searchKeyword))
+            dispatch(updateMorePage(1))
         })
         
     }
@@ -31,6 +31,9 @@ class Search extends React.Component {
     }
 
     render() {
+
+        const { questions } = this.props
+
         return (
             <Grid
                 container
@@ -68,7 +71,7 @@ class Search extends React.Component {
                         </Grid>
                     </Paper>
                 </Grid>
-                {this.state.showResults
+                { questions.length > 0
                     ? <SearchResults />    
                     : null}
             </Grid>
@@ -105,9 +108,16 @@ const styles = {
     }
 }
 
-const mapStateToProps = ({ ui }) => {
+const mapStateToProps = ({ questions, ui }) => {
     return {
-        searchIsLoading: ui.searchIsLoading
+        searchIsLoading: ui.searchIsLoading,
+        questions: Object
+            .keys(questions)
+            .filter((value) => value !== 'total')
+            .filter((value) => value !== 'keyword')
+            .map((key) => questions[key]).reverse(),
+        keyword: questions.keyword,
+        total: questions.total
     }
 }
 export default connect(mapStateToProps)(Search)
